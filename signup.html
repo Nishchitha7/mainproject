@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Up - Interview Prep Pro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <form id="signupForm">
+    <h2>Sign Up</h2>
+    <p class="form-description">Create your account and set up your job preparation profile</p>
+    
+    <div class="form-section">
+      <h3>Personal Information</h3>
+      <input type="text" name="username" placeholder="Username" required />
+      <input type="text" name="fullName" placeholder="Full Name" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <input type="tel" name="phone" placeholder="Phone (optional)" />
+    </div>
+    
+    <div class="form-section">
+      <h3>Job Preparation Details</h3>
+      <select name="usertype" required>
+        <option value="">Select User Type</option>
+        <option value="student">Student</option>
+        <option value="professional">Professional</option>
+        <option value="jobseeker">Job Seeker</option>
+      </select>
+      
+      <input type="text" name="location" placeholder="Location (City, Country)" required />
+      <input type="text" name="careerGoal" placeholder="Career Goal (e.g., Software Engineer)" required />
+      
+      <select name="preferredTechnologies" multiple required>
+        <option value="">Select Preferred Technologies (Hold Ctrl/Cmd to select multiple)</option>
+        <option value="Python">Python</option>
+        <option value="Java">Java</option>
+        <option value="JavaScript">JavaScript</option>
+        <option value="React">React</option>
+        <option value="Node.js">Node.js</option>
+        <option value="Web Development">Web Development</option>
+        <option value="Data Analysis">Data Analysis</option>
+        <option value="Machine Learning">Machine Learning</option>
+        <option value="DevOps">DevOps</option>
+        <option value="Mobile Development">Mobile Development</option>
+      </select>
+    </div>
+    
+    <button type="submit">Sign Up</button>
+    <p>Already have an account? <a href="login.html">Log In</a></p>
+  </form>
+  <script src="signup.js"></script>
+</body>
+</html> 

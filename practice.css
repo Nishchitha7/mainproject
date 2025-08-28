@@ -1,0 +1,52 @@
+body {
+    background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+}
+.practice-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 6px 32px rgba(80,120,200,0.10), 0 1.5px 6px rgba(80,120,200,0.08);
+    padding: 36px 32px 32px 32px;
+}
+.stage-title {
+    font-size: 1.5rem;
+    color: #2d3a4a;
+    margin-bottom: 18px;
+    font-weight: 600;
+}
+.question {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+}
+.options label {
+    display: block;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+.feedback {
+    margin-top: 12px;
+    color: #d9534f;
+}
+.btn {
+    background: #2d3a4a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 18px;
+}
+.btn:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+}
+.summary {
+    background: #f7fafd;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-top: 24px;
+}

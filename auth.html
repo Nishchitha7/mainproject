@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Authentication - Interview Prep Pro</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" />
+  <style>
+    .auth-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f8fafc;
+    }
+    .auth-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      padding: 2.5rem 2rem 2rem 2rem;
+      width: 100%;
+      max-width: 450px;
+      text-align: center;
+    }
+    .auth-logo {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 1rem;
+    }
+    .auth-title {
+      font-size: 2rem;
+      color: #1e293b;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+    .auth-card form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .auth-card input, .auth-card select {
+      padding: 0.75rem 1rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      font-size: 1rem;
+      background: #f8fafc;
+      transition: border 0.2s;
+    }
+    .auth-card input:focus, .auth-card select:focus {
+      border: 1.5px solid #15803d;
+      outline: none;
+      background: #fff;
+    }
+    .auth-card button[type="submit"] {
+      background: #15803d;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .auth-card button[type="submit"]:hover {
+      background: #166534;
+    }
+    .toggle-link {
+      color: #15803d;
+      cursor: pointer;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+    .toggle-link:hover {
+      color: #166534;
+    }
+    .auth-card p {
+      margin: 0.5rem 0 0 0;
+      color: #64748b;
+      font-size: 0.98rem;
+    }
+    .success-message {
+      color: #15803d;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    .form-section {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #15803d;
+    }
+    .form-section h3 {
+      margin: 0 0 0.5rem 0;
+      color: #374151;
+      font-size: 1rem;
+      font-weight: 600;
+      text-align: left;
+    }
+    .form-description {
+      color: #666;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Logo" class="auth-logo" />
+      <div class="auth-title">Interview Prep Pro</div>
+      <div id="successMsg" class="success-message" style="display:none;"></div>
+      <div id="formContainer"></div>
+    </div>
+  </div>
+  <script>
+    const formContainer = document.getElementById('formContainer');
+    const successMsg = document.getElementById('successMsg');
+
+    function renderLoginForm() {
+      formContainer.innerHTML = `
+        <form id="loginForm">
+          <h2 style="color:#1e293b;font-size:1.3rem;margin-bottom:0.5rem;">Log In</h2>
+          <p class="form-description">Enter your credentials to access your account</p>
+          
+          <div class="form-section">
+            <h3>Authentication</h3>
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="password" name="password" placeholder="Password" required />
+          </div>
+          
+          <button type="submit">Log In</button>
+          <p>Don't have an account? <span class="toggle-link" id="showSignup">Sign Up</span></p>
+        </form>
+      `;
+      document.getElementById('showSignup').onclick = (e) => {
+        e.preventDefault();
+        renderSignupForm();
+        successMsg.style.display = 'none';
+      };
+      document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        
+        const data = {
+          email: form.email.value,
+          password: form.password.value
+        };
+        
+        try {
+          const res = await fetch('http://localhost:3000/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(data)
+          });
+          const result = await res.json();
+          if (result.success) {
+            window.location.href = 'index.html';
+          } else {
+            alert(result.message);
+          }
+        } catch (error) {
+          alert('Error connecting to server. Please try again.');
+        }
+      });
+    }
+
+    function renderSignupForm() {
+      formContainer.innerHTML = `
+        <form id="signupForm">
+          <h2 style="color:#1e293b;font-size:1.3rem;margin-bottom:0.5rem;">Sign Up</h2>
+          <p class="form-description">Create your account and set up your job preparation profile</p>
+          
+          <div class="form-section">
+            <h3>Personal Information</h3>
+            <input type="text" name="username" placeholder="Username" required />
+            <input type="text" name="fullName" placeholder="Full Name" required />
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="password" name="password" placeholder="Password" required />
+            <input type="tel" name="phone" placeholder="Phone (optional)" />
+          </div>
+          
+          <div class="form-section">
+            <h3>Job Preparation Details</h3>
+            <select name="usertype" required>
+              <option value="">Select User Type</option>
+              <option value="student">Student</option>
+              <option value="professional">Professional</option>
+              <option value="jobseeker">Job Seeker</option>
+            </select>
+            <input type="text" name="location" placeholder="Location (City, Country)" required />
+            <input type="text" name="careerGoal" placeholder="Career Goal (e.g., Software Engineer)" required />
+            <select name="preferredTechnologies" multiple required>
+              <option value="">Select Preferred Technologies (Hold Ctrl/Cmd to select multiple)</option>
+              <option value="Python">Python</option>
+              <option value="Java">Java</option>
+              <option value="JavaScript">JavaScript</option>
+              <option value="React">React</option>
+              <option value="Node.js">Node.js</option>
+              <option value="Web Development">Web Development</option>
+              <option value="Data Analysis">Data Analysis</option>
+              <option value="Machine Learning">Machine Learning</option>
+              <option value="DevOps">DevOps</option>
+              <option value="Mobile Development">Mobile Development</option>
+            </select>
+          </div>
+          
+          <button type="submit">Sign Up</button>
+          <p>Already have an account? <span class="toggle-link" id="showLogin">Log In</span></p>
+        </form>
+      `;
+      document.getElementById('showLogin').onclick = (e) => {
+        e.preventDefault();
+        renderLoginForm();
+        successMsg.style.display = 'none';
+      };
+      document.getElementById('signupForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        
+        // Get selected technologies
+        const technologySelect = form.preferredTechnologies;
+        const selectedTechnologies = [];
+        for (let i = 0; i < technologySelect.options.length; i++) {
+          if (technologySelect.options[i].selected) {
+            selectedTechnologies.push(technologySelect.options[i].value);
+          }
+        }
+        
+        const data = {
+          username: form.username.value,
+          fullName: form.fullName.value,
+          usertype: form.usertype.value,
+          phone: form.phone.value || '',
+          email: form.email.value,
+          password: form.password.value,
+          location: form.location.value,
+          careerGoal: form.careerGoal.value,
+          preferredTechnologies: selectedTechnologies
+        };
+        
+        try {
+          const res = await fetch('http://localhost:3000/api/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+          const result = await res.json();
+          if (result.success) {
+            form.reset();
+            renderLoginForm();
+            successMsg.textContent = 'Sign up successful! Please log in.';
+            successMsg.style.display = '';
+          } else {
+            alert(result.message);
+          }
+        } catch (error) {
+          alert('Error connecting to server. Please try again.');
+        }
+      });
+    }
+
+    // Show login form by default
+    renderLoginForm();
+  </script>
+</body>
+</html> 
